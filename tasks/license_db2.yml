@@ -1,0 +1,24 @@
+---
+#Download a DB2 License copy from a custom URL (Could be a http, an ftp whatever.)
+- name: License DB2 | Check if license is added
+  shell: "{{ resp.file }}//adm/db2licm -l | grep Expiry"
+  register: db2license_expiry
+
+- block:
+  - name: License DB2 | Downloading DB2 license file
+    get_url:
+      url: "{{ db2_license_binary.url }}"
+      dest: "{{ db2_license_binary.location }}"
+    when: db2_binary.url is defined
+
+  - name: License DB2 | Decompressing DB2 license file
+    unarchive:
+      src: "{{ db2_license_binary.location }}"
+      dest: "{{ db2_license_binary.dest }}"
+      creates: "{{ db2_license_binary.dest }}/{{ db2_license_creates }}"
+      remote_src: yes
+
+  - name: License DB2 | Add DB2 license #todo check that awse_o is the standard
+    command: '"{{ resp.file }}/adm/db2licm" -a "{{ db2_license_binary.dest }}/{{ db2_license_creates }}/db2/license/db2awse_o.lic"'
+    register: db2_license_add
+  when: "'Permanent' not in db2license_expiry.stdout"

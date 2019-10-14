@@ -3,6 +3,7 @@ PROD                      = {{resp.prod}}
 FILE                      = {{resp.file}}
 LIC_AGREEMENT             = {{resp.lic_agreement}}
 INSTALL_TYPE              = {{resp.install_type}}
+INSTALL_TSAMP             = {{resp.install_tsamp}}
 
 
 ** The following languages apply to all translated components. Enable the
@@ -30,14 +31,14 @@ INSTALL_TYPE              = {{resp.install_type}}
 ** --------------------------
 INSTANCE                  = {{inst.instance}}
 {{inst.instance}}.NAME             = {{inst.name}} 
-{{inst.instance}}.GROUP_NAME              = {{inst.group_name}} 
+{{inst.instance}}.GROUP_NAME       = {{inst.group_name}}
 {{inst.instance}}.FENCED_USERNAME  = {{inst.fenced_username}}
 {{inst.instance}}.FENCED_GROUP_NAME = {{inst.fenced_group_name}}
 
 {%if inst.options is defined %}
 ** Instance Optionals
 ** ---------------------------
-{% for key, value in inst.options.iteritems() %}
+{% for key, value in inst.options.items() %}
 {{inst.instance | upper}}.{{ key | upper}}             = {{ value }}
 {% endfor %}
 {% endif %}
@@ -45,7 +46,7 @@ INSTANCE                  = {{inst.instance}}
 {% if inst.dbm_params is defined %}
 ** Instance DBM CFG Settings
 ** -------------------------
-{% for key, value in inst.dbm_params.iteritems() %}
+{% for key, value in inst.dbm_params.items() %}
 {{inst.instance | upper}}.{{ key | upper}}             = {{ value }}
 {% endfor %}
 {% endif %}
@@ -55,7 +56,7 @@ INSTANCE                  = {{inst.instance}}
 {%if global_params is defined %}
 ** Global Profile Registry Settings
 ** --------------------------------
-{% for key, value in global_params.iteritems() %}
+{% for key, value in global_params.items() %}
 {{ key | upper}}             = {{ value }}
 {% endfor %}
 {% endif %}
