@@ -22,7 +22,7 @@ Role Variables
 
 This hash controls how to send the DB2 binary to the remote hosts.
 
-**db2_binary.url**: A URL to download db2 (dont set this if you want to use a local copy)
+**db2_binary.url**: A URL to download db2 License (don't set this if you want to use a local copy)
 
 **db2_binary.location**: A path to save the remote file or to get the file if url wasn't defined
 
@@ -30,13 +30,30 @@ This hash controls how to send the DB2 binary to the remote hosts.
 
 
     db2_binary:
-        url: https://mycompany.com/downloads/db2_10_5.tar.gz
-        location: /ansible/files/db2_10.5.tar.gz
+        url: https://mycompany.com/downloads/db2_11_1.tar.gz
+        location: /ansible/files/db2_11.1.tar.gz
         dest: /tmp
 
  Check how to download DB2 from a remote URL [here](https://github.com/bernardoVale/ansible-role-db2/tree/master/examples/downloading_db2.yml)
  
  If you have a local copy use this [example](https://github.com/bernardoVale/ansible-role-db2/tree/master/examples/local_db2.yml)
+
+
+###DB2_BINARY_LICENSE
+
+ For the Spectrum Scale DB2 License package:
+
+**db2_license_binary.url**: A URL to download db2 (don't set this if you want to use a local copy)
+
+**db2_license_binary.location**: A path to save the remote file or to get the file if url wasn't defined
+
+**db2_license_binary.dest**: Where the role should decompress DB2 on remote host.
+
+    db2_license_binary:
+      url: "https://mycompany.com/downloads/DB2_AWSE_Restricted_Activation_11.1.zip"
+      location: "/download/installer/db2_license.tar.gz"
+      dest: "/download/installer
+
 
 ###DB2_CREATES
 
@@ -44,11 +61,18 @@ The DB2 tar.gz usually creates a folder named `server`, but there are some binar
 
     db2_creates: expc
 
+###DB2_LICENSE_CREATES
+The DB2 tar.gz usually creates a folder named `awse_x`, but there are some binaries that creates different folders, If your tar.gz creates a different folder, change this variable. For example:
+
+    db2_license_creates: 'awse_o'
+  
+  
 ###DB2_PACKAGES
 
 The list of packages that the role should install before running the installer. Leave as default unless you know what you're doing.
 
 DB2 requires some packages to run properly on Linux, you can read more about this [here](https://www-01.ibm.com/support/knowledgecenter/SSEPGG_10.5.0/com.ibm.db2.luw.qb.server.doc/doc/r0008865.html?lang=en)
+
 
 ###RESP
 
@@ -64,15 +88,16 @@ This hash is used to customize the DB2 installation.
 
     resp:
        prod: "DB2_SERVER_EDITION"
-       file: "/opt/ibm/db2/V10.5"
+       file: "/opt/ibm/db2/V11.1"
        lic_agreement: "ACCEPT" # ACCEPT or DECLINE
        install_type: "TYPICAL" # TYPICAL, COMPACT, CUSTOM
+       install_tsamp: "NO"
 
 For **DB2 Express-C** (Check this [file](https://github.com/bernardoVale/ansible-role-db2/tree/master/examples/db2_express-c_example.yml) ):
 
      resp:
        prod: "EXPRESS_C"
-       file: "/opt/ibm/db2/V10.1"
+       file: "/opt/ibm/db2/V11.1"
        lic_agreement: "ACCEPT" # ACCEPT or DECLINE
        install_type: "TYPICAL" # TYPICAL, COMPACT, CUSTOM
 
@@ -95,7 +120,7 @@ You need at least specify where to get DB2. [Downloading db2](https://github.com
          - db2
       vars:
         db2_binary:
-          location: /ansible/files/db2_10.5.tar.gz
+          location: /ansible/files/db2_11.1.tar.gz
            dest: /tmp
 
 ###Installing DB2 without instances
