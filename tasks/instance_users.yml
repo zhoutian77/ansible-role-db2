@@ -19,7 +19,7 @@
   user:
     name: "{{ item.name }}"
     group: "{{ item.group_name }}"
-    password: "{{ item.password | default('ldUMKEu7/QCAY') }}"
+    password: "{{ item.password | password_hash('sha512') }}"
     home: "{{ item.home_directory | default(omit) }}"
     uid: "{{ item.uid | default(omit) }}"
     createhome: "{{ item.createhome | default(true) }}"
@@ -29,7 +29,7 @@
   user:
     name: "{{ item.fenced_username }}"
     group: "{{ item.fenced_group_name }}"
-    password: "{{ item.fenced_password | default('ldUMKEu7/QCAY') }}"
+    password: "{{ item.fenced_password | password_hash('sha512') }}"
     home: "{{ item.fenced_home_directory | default(omit) }}"
     uid: "{{ item.fenced_uid | default(omit) }}"
     createhome: "{{ item.createhome | default(true) }}"

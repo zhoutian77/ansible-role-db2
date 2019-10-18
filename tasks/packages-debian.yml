@@ -2,6 +2,7 @@
   - name: Adding i386 packages on Apt
     shell: dpkg --add-architecture i386
     tags: setup
+    changed_when: false
 
   - name: Installing DB2 pre requisites packages - Debian
     apt:

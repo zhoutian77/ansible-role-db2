@@ -1,8 +1,9 @@
 ---
 #Download a DB2 License copy from a custom URL (Could be a http, an ftp whatever.)
 - name: License DB2 | Check if license is added
-  shell: "{{ resp.file }}//adm/db2licm -l | grep Expiry"
+  shell: "{{ resp.file }}/adm/db2licm -l | grep Expiry"
   register: db2license_expiry
+  changed_when: false
 
 - block:
   - name: License DB2 | Downloading DB2 license file

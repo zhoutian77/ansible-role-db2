@@ -20,3 +20,4 @@
   - name: Create Database Log
     debug: var=db_debug
     when: db_debug|changed
+    changed_when: false

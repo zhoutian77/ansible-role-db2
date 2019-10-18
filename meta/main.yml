@@ -23,8 +23,8 @@ galaxy_info:
   - name: Ubuntu
     versions:
      - all
-  categories:
+  galaxy_tags:
   - database
-  - database:sql
+  - sql
 
 dependencies: []
