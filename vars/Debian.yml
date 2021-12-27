@@ -7,5 +7,7 @@ db2_packages:
  - libpam0g
  - lib32stdc++6
  - libpam0g:i386
+ - binutils
+ - libaio1
 
 make_cache: yes

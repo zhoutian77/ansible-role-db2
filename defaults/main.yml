@@ -1,32 +1,58 @@
 ---
 # On most DB2 compressed binary the tar.gz creates a file named server, but if your compressed file doesn't, change this variable to the name of the folder that it creates.
-db2_creates: server
-db2_license_creates: awse_o
-#
-db2_packages:
- - pam
- - pam-devel.i686
- - libaio
- - compat-libstdc++-33.i686
- - compat-libstdc++-33
- - libstdc++-devel.i686
- - libstdc++
- - ksh
- - unzip
+db2_creates: server_dec
+db2_license_creates: std_vpc
+db2_license_filename: db2std_vpc.lic
+
+# Vars is in folder /vars/os
+#db2_packages:
+# - pam
+# - pam-devel.i686
+# - libaio
+# - compat-libstdc++-33.i686
+# - compat-libstdc++-33
+# - libstdc++-devel.i686
+# - libstdc++
+# - ksh
+# - unzip
+# - libselinux-python3
+
+# https://www.ibm.com/docs/en/db2/11.5?topic=servers-linux
+# Rhel 8.x
+#db2_packages:
+# - libaio
+# - ksh
+# - libstdc++.so.6
+# - unzip
+# - libselinux-python3
+
+# - libstdc++ Contains libstdc++.so.6 that is not required for Linux on POWER® or SLES 11.
+# - libxlc Contains libibmc++.so.1 (64 bit only) that is required for Linux on POWER little endian.
 
 yum_repo: http://public-yum.oracle.com/public-yum-ol7.repo
+
 #Check download_db2.yml  to find how you can use this role to download a DB2 from a remote repo
 db2_binary:
   location: "/vagrant/tests/db2_10503.tar.gz"
   dest: "/tmp"
 
-# Response file keywords: https://www-01.ibm.com/support/knowledgecenter/SSEPGG_10.5.0/com.ibm.db2.luw.qb.server.doc/doc/r0007505.html
+# Removing DB2 Community License
+db2_license_remove_community: true
+db2_community_product_identifier: "db2dec"
+
+# SELinux - Disabling or Put in permissive mode, logging actions that would be blocked.
+db2_selinux_state: "permissive"
+
+# Response file keywords: https://www.ibm.com/docs/en/db2/11.5?topic=file-response-keywords
 resp:
   prod: "DB2_SERVER_EDITION"
-  file: "/opt/ibm/db2/V11.1"
+  file: "/opt/ibm/db2/V11.5"
   lic_agreement: "ACCEPT" # ACCEPT or DECLINE
   install_type: "TYPICAL" # TYPICAL, COMPACT, CUSTOM
   install_tsamp: "NO"
+
+# location for DB2 respons file
+db2_respons_locations: "/tmp/db2server.rsp"
 
 # This controls if the role should cache yum/apt
 make_cache: no

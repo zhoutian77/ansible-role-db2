@@ -12,5 +12,8 @@
     tags: ['packages', 'setup']
 
   - name: Fixing Libpam
-    file: path=/lib/libpam.so src=/lib/i386-linux-gnu/libpam.so.0 state=link
+    file:
+      path: /lib/libpam.so
+      src: /lib/i386-linux-gnu/libpam.so.0
+      state: link
     tags: setup
