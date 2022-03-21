@@ -72,4 +72,4 @@
 
 - import_tasks: license_db2.yml
   tags: licensedb2
-  when: db2_binary.url is defined
+  when: db2_license_binary.url is defined
